@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESRGAN Image Processing</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;
+    }
+
+    h1 {
+      color: #fff;
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    form {
+      position: relative;
+      z-index: 1;
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="file"] {
+      display: none; /* Hide the default file input */
+    }
+
+    label {
+      width: 100%;
+      padding: 10px;
+      border: 1px dashed #ddd;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      display: block;
+    }
+
+    #image-preview {
+      max-width: 100%;
+      max-height: 200px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    input[type="submit"] {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='background.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <h1>ESRGAN Image Processing</h1>
+  <form method="post" action="/process_image" enctype="multipart/form-data" id="upload-form">
+    <label for="image-upload" id="drop-area">Drag and drop an image or click here to browse</label>
+    <input type="file" name="image" accept=".jpg, .jpeg, .png" id="image-upload">
+    <div id="image-preview"></div>
+    <br>
+    <input type="submit" value="Process Image">
+  </form>
+
+  <script>
+    var dropArea = document.getElementById('drop-area');
+    var imagePreview = document.getElementById('image-preview');
+
+    dropArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dropArea.classList.add('highlight');
+    });
+
+    dropArea.addEventListener('dragleave', function() {
+      dropArea.classList.remove('highlight');
+    });
+
+    dropArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dropArea.classList.remove('highlight');
+
+      var files = e.dataTransfer.files;
+
+      if (files.length > 0) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          imagePreview.innerHTML = '<img src="' + e.target.result + '" alt="Preview">';
+          imagePreview.style.display = 'block';
+        };
+
+        reader.readAsDataURL(files[0]);
+      }
+
+      document.getElementById('image-upload').files = files;
+    });
+  </script>
+</body>
+</html>

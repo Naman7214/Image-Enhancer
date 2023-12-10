@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e2124; /* Blackish-blue background color */
+            color: #fff; /* White text color */
+            text-align: center;
+        }
+
+        h1 {
+            padding: 30px 0;
+        }
+
+        #image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh; /* Adjust the height as needed */
+        }
+
+        #processed-image {
+            max-width: 100%;
+            max-height: 100%;
+            border: 2px solid #3c6df0; /* Border color */
+            border-radius: 8px; /* Border radius */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* Optional: Box shadow */
+        }
+
+        #download-button {
+            background-color: #3c6df0; /* Download button background color */
+            color: #fff; /* Download button text color */
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        #download-button:hover {
+            background-color: #304e9c; /* Hover background color */
+        }
+    </style>
+</head>
+<body>
+    <h1>Result</h1>
+    <div id="image-container">
+        <img id="processed-image" src="{{ result_path }}" alt="Processed Image">
+    </div>
+    <a id="download-button" href="{{ result_path }}" download="processed_image.png">Download Image</a>
+</body>
+</html>
